@@ -1,71 +1,53 @@
+import React from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { MessageCircle } from 'lucide-react'
+import Home from './screens/Home'
+import AddMeal from './screens/AddMeal'
+import Analytics from './screens/Analytics'
+import Planner from './screens/Planner'
+import ShopList from './screens/ShopList'
+import ProductDetail from './screens/ProductDetail'
+import Checkout from './screens/Checkout'
+import Chatbot from './screens/Chatbot'
+import BottomNav from './components/BottomNav'
+
 function App() {
+  const location = useLocation()
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
-
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
-
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
-
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
-          </div>
-
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white">
+      {/* Ambient gradients */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[380px] h-[380px] rounded-full bg-cyan-400/10 blur-3xl" />
       </div>
+
+      <div className="relative mx-auto max-w-sm min-h-screen px-4 pb-24">
+        <Routes location={location}>
+          <Route index element={<Home />} />
+          <Route path="/add" element={<AddMeal />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/planner" element={<Planner />} />
+          <Route path="/shop" element={<ShopList />} />
+          <Route path="/shop/:id" element={<ProductDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/chat" element={<Chatbot />} />
+        </Routes>
+
+        {/* Floating Chat Button */}
+        {location.pathname !== '/chat' && (
+          <a
+            href="/chat"
+            className="fixed bottom-24 right-6 z-20 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 text-cyan-300 shadow-[0_8px_30px_rgba(32,211,238,0.25)] hover:bg-white/15 transition"
+            aria-label="AI Chatbot"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </a>
+        )}
+      </div>
+
+      {/* Bottom Navigation */}
+      <BottomNav />
     </div>
   )
 }
